@@ -1,9 +1,10 @@
 import Layout from "@/components/layout";
+import Section from "@/components/section";
 
 export default function Home() {
   return (
     <Layout title="Home">
-      <h1 className="text-3xl font-bold underline"></h1>
+      <Section></Section>
     </Layout>
   );
 }
