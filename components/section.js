@@ -7,8 +7,28 @@ import { Autoplay, Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import Spinner from "./spinner";
+import Swr from "@/pages/utils/swr";
+import Error from "./error";
 
 export default function section1() {
+
+
+  const { data, isLoading, isError } = Swr("api/trending");
+  console.log(data);
+
+  if (isLoading)
+    return (
+      <div>
+        <Spinner></Spinner>
+      </div>
+    );
+  if (isError) return (
+    <div>
+      <Error />
+    </div>
+  );
+
   return (
     <section className="py-16">
       <div className="container mx-auto md:px-20">
@@ -17,49 +37,45 @@ export default function section1() {
           modules={[Autoplay, Pagination]}
           pagination={{ clickable: true }}
           slidesPerView={1}
-          autoplay={{
-            delay: 2000,
-            loop:true
-          }}
         >
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()} 2</SwiperSlide>
+          {data.map((value, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <Slide data={value}></Slide>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>
   );
 }
 
-function Slide() {
+function Slide({data}) {
+  const { id, title, category, img, published, author } = data;
   return (
     <div className="grid md:grid-cols-2">
       <div className="image">
         <Link href={"/"}>
-          <Image
-            src={"/images/img1.jpg"}
-            alt="mememee"
-            width={600}
-            height={600}
-          />
+          <Image src={img} alt="mememee" width={600} height={600} />
         </Link>
       </div>
       <div className="info flex justify-center flex-col">
         <div className="cat">
           <Link href={"/"} className="text-orange-600 hover:text-orange-800">
-            Business, Travel
+            {category || "Unknown"}
           </Link>
 
           <Link href={"/"} className="text-gray-800 hover:text-gray-600">
-            - July 3, 2022
+            - {published || "Unknown"}
           </Link>
         </div>
         <div className="title">
           <Link
             href={"/"}
-            className="text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600"
+            className="text-3xl md:text-4xl font-bold text-gray-800 hover:text-gray-600"
           >
-            Your most unhappy customers are your greatest source of learning
+            {title || "Title"}
           </Link>
         </div>
         <p className="text-gray-500 py-3">
@@ -68,7 +84,7 @@ function Slide() {
           text by the name of Lorem Ipsum decided to leave for the far World of
           Grammar.
         </p>
-        <Author />
+        {author ? <Author></Author> : <></>}
       </div>
     </div>
   );
