@@ -30,7 +30,7 @@ export default function section1() {
   );
 
   return (
-    <section className="py-16">
+    <section className="py-16 px-2">
       <div className="container mx-auto md:px-20">
         <h1 className="font-bold text-4xl pb-12 text-center">Trending</h1>
         <Swiper
@@ -56,24 +56,30 @@ function Slide({data}) {
   return (
     <div className="grid md:grid-cols-2">
       <div className="image">
-        <Link href={"/"}>
+        <Link href={`/posts/${id}`}>
           <Image src={img} alt="mememee" width={600} height={600} />
         </Link>
       </div>
-      <div className="info flex justify-center flex-col">
+      <div className="info flex justify-center flex-col md: lg:px-8">
         <div className="cat">
-          <Link href={"/"} className="text-orange-600 hover:text-orange-800">
+          <Link
+            href={`/posts/${id}`}
+            className="text-orange-600 hover:text-orange-800"
+          >
             {category || "Unknown"}
           </Link>
 
-          <Link href={"/"} className="text-gray-800 hover:text-gray-600">
+          <Link
+            href={`/posts/${id}`}
+            className="text-gray-800 hover:text-gray-600"
+          >
             - {published || "Unknown"}
           </Link>
         </div>
         <div className="title">
           <Link
-            href={"/"}
-            className="text-3xl md:text-4xl font-bold text-gray-800 hover:text-gray-600"
+            href={`/posts/${id}`}
+            className="text-xl text-center md:text-sm lg:text-3xl font-bold text-gray-800 hover:text-gray-600"
           >
             {title || "Title"}
           </Link>
@@ -84,7 +90,7 @@ function Slide({data}) {
           text by the name of Lorem Ipsum decided to leave for the far World of
           Grammar.
         </p>
-        {author ? <Author></Author> : <></>}
+        <div className="flex justify-center">{author ? <Author></Author> : <></>}</div>
       </div>
     </div>
   );

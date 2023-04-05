@@ -14,31 +14,32 @@ import Spinner from "./spinner";
 import Swr from "@/pages/utils/swr";
 
 export default function Section3() {
+  const { data, isLoading, isError } = Swr("api/popular");
+  console.log(data);
 
+  if (isLoading)
+    return (
+      <div>
+        <Spinner></Spinner>
+      </div>
+    );
+  if (isError)
+    return (
+      <div>
+        <Error />
+      </div>
+    );
 
-    const { data, isLoading, isError } = Swr("api/popular");
-    console.log(data);
-
-    if (isLoading)
-      return (
-        <div>
-          <Spinner></Spinner>
-        </div>
-      );
-    if (isError)
-      return (
-        <div>
-          <Error />
-        </div>
-      );
-  
   return (
-    <section className="container mx-auto md:px-20">
-      <h1 className="font-bold text-4xl pb-12 text-center">Most Popular</h1>
+    <section className="container mx-auto md:px-20 py-16 px-2">
+      <h1 className="font-boldtext-4xl pb-12 text-center">Most Popular</h1>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
-        slidesPerView={3}
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 10 },
+        }}
+        // slidesPerView={1}
       >
         {data.map((value, index) => {
           return (
@@ -57,24 +58,30 @@ function Post({ data }) {
 
   return (
     <div className="grid">
-      <div className="images">
-        <Link href={"/"}>
+      <div className="images flex justify-center">
+        <Link href={`/posts/${id}`}>
           <Image src={img} alt="gfg" width={350} height={200} />
         </Link>
       </div>
       <div className="info flex justify-center flex-col py-4">
-        <div className="cat">
-          <Link href={"/"} className="text-orange-600 hover:text-orange-800">
+        <div className="cat flex justify-center">
+          <Link
+            href={`/posts/${id}`}
+            className="text-orange-600 hover:text-orange-800"
+          >
             {category || "Unknown"}
           </Link>
-          <Link href={"/"} className="text-gray-800 hover:text-gray-600">
+          <Link
+            href={`/posts/${id}`}
+            className="text-gray-800 hover:text-gray-600"
+          >
             - {published || "Unknown"}
           </Link>
         </div>
-        <div className="title">
+        <div className="title flex justify-center">
           <Link
-            href={"/"}
-            className="text-xl font-bold text-gray-800 hover:text-gray-600"
+            href={`/posts/${id}`}
+            className="text-xl text-center md:text-sm lg:text-xl font-bold text-gray-800 hover:text-gray-600"
           >
             {title || "Title"}
           </Link>
@@ -82,7 +89,9 @@ function Post({ data }) {
         <p className="text-gray-500 py-3">
           {description.substr(0, 200) || "description"}
         </p>
-        {author ? <Author></Author> : <></>}
+        <div className="flex justify-center">
+          {author ? <Author></Author> : <></>}
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Author() {
   return (
-    <div className="author flex py-5">
+    <div className="author flex py-1">
       <Image
         src={"/images/author1.jpg"}
         alt="meee"
@@ -15,7 +15,7 @@ export default function Author() {
   
           <Link
             href={"/"}
-            className="text-md font-bold text-gray-800 hover:text-gray-600"
+            className="text-sm font-bold text-gray-800 hover:text-gray-600"
           >
             Flying High
           </Link>

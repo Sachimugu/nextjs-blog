@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Error from "@/components/error";
 import Spinner from "@/components/spinner";
 import Swr from "../utils/swr";
+import Link from "next/link";
 
 const Page = ({ post }) => {
   const { id, title, category, img, published, author, description, subtitle } =
@@ -18,19 +19,25 @@ const Page = ({ post }) => {
       {/* { data.map((x)=>{
         return data.title
       })} */}
-      <section className="container mx-auto md:px-2 py-8 md:w-5/6">
+      <section className="container px-2 mx-auto md:px-2 py-8 md:w-5/6">
         <div className="flex justify-center">
           {author ? <Author></Author> : <></>}
         </div>
         <div className="post py-4 md:py-8">
-          <h1 className="font-bold text-center text-xl md:text-2xl">
-            {title || "Title"} - {published || "published"}
+          <h1 className="font-bold text-center text-md md:text-xl pb-4">
+            {title || "Title"}
+            <Link
+              href={`/posts/${id}`}
+              className="text-orange-600 hover:text-orange-800"
+            >
+               <small>-{published || "Unknown"}</small>
+            </Link>
           </h1>
-          <p>{subtitle || "subtitle"}</p>
+          <p className="text-center lg:pb-8">{subtitle || "subtitle"}</p>
           <div className="flex justify-center">
             <Image src={img} width={800} height={400} alt="mee"></Image>
           </div>
-          <div className="content flex flex-col gap-4 text-lg text-gray-600 py-4 md:py-8">
+          <div className="content flex flex-col text-center gap-4 text-lg text-gray-600 py-4 md:py-8">
             <p>{description || "description"}</p>
           </div>
         </div>

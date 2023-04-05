@@ -18,13 +18,13 @@ export default function Section2() {
       );
     if (isError) return <div><Error/></div>;
   return (
-    <section className="container mx-auto md:px-20">
+    <section className="container px-2 mx-auto md:px-20 py-16">
       <h1 className="font-bold text-4xl pb-12 text-center">Latest Posts</h1>
 
       {/* grid columns */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {data.map((item, index) => {
-          return <Post data={item} key={index}></Post>
+          return <Post data={item} key={index}></Post>;
         })}
       </div>
     </section>
@@ -36,33 +36,37 @@ function Post({ data }) {
   return (
     <div className="item">
       <div className="images">
-        <Link href={"/"}>
-          
-            <Image
-              src={img || "/"}
-              className="rounded"
-              width={500}
-              height={350}
-              alt='jkjg'
-            />
-         
+        <Link href={`/posts/${id}`}>
+          <Image
+            src={img || "/"}
+            className="rounded"
+            width={500}
+            height={350}
+            alt="jkjg"
+          />
         </Link>
       </div>
       <div className="info flex justify-center flex-col py-4">
         <div className="cat">
-          <Link href={"/"}className="text-orange-600 hover:text-orange-800">
-              {category || "Unknown"}
-          
+          <Link
+            href={`/posts/${id}`}
+            className="text-orange-600 hover:text-orange-800"
+          >
+            {category || "Unknown"}
           </Link>
-          <Link href={"/"}className="text-gray-800 hover:text-gray-600">
-              - {published || "Unknown"}
-            
+          <Link
+            href={`/posts/${id}`}
+            className="text-gray-800 hover:text-gray-600"
+          >
+            - {published || "Unknown"}
           </Link>
         </div>
         <div className="title">
-          <Link href={"/"}className="text-xl font-bold text-gray-800 hover:text-gray-600">
-              {title || "Title"}
-           
+          <Link
+            href={`/posts/${id}`}
+            className="text-xl text-center md:text-sm lg:text-xl font-bold text-gray-800 hover:text-gray-600"
+          >
+            {title || "Title"}
           </Link>
         </div>
         <p className="text-gray-500 py-3">
@@ -71,7 +75,11 @@ function Post({ data }) {
           text by the name of Lorem Ipsum decided to leave for the far World of
           Grammar.
         </p>
-        {author ? <Author></Author> : <></>}
+        <div className="flex justify-center">
+          <div className="flex justify-center">
+            {author ? <Author></Author> : <></>}
+          </div>
+        </div>
       </div>
     </div>
   );

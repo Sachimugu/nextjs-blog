@@ -22,8 +22,8 @@ export default function Section4() {
       </div>
     );
   return (
-    <section className="container mx-auto md:px-20">
-      <div className="grid md:grid-cols-2">
+    <section className="container px-2 mx-auto md:px-4 lg:px-20">
+      <div className="grid md:grid-cols-2 gap-2">
         <div className="item">
           <h1 className="font-bold text-3xl py-12 text-center">Business</h1>
           <div className="flex flex-col gap-6">
@@ -53,7 +53,7 @@ function Post({ data }) {
   return (
     <div className="flex gap-5">
       <div className="image flex flex-col justify-start">
-        <Link href={"/"}>
+        <Link href={`/posts/${id}`}>
           <Image
             src={img}
             className="rounded"
@@ -64,23 +64,31 @@ function Post({ data }) {
         </Link>
       </div>
       <div className="info flex justify-center flex-col">
-        <div className="cat">
-          <Link href={"/"} className="text-orange-600 hover:text-orange-800">
+        <small className="cat">
+          <Link
+            href={`/posts/${id}`}
+            className="text-orange-600 hover:text-orange-800"
+          >
             {category || "Unknown"}
           </Link>
-          <Link href={"/"} className="text-gray-800 hover:text-gray-600">
-            -  {published || "Unknown"}
+          <small>
+          <br></br>
+          </small>
+          <Link
+            href={`/posts/${id}`}
+            className="text-gray-800 hover:text-gray-600"
+          >
+            {published || "Unknown"}
           </Link>
-        </div>
+        </small>
         <div className="title">
           <Link
-            href={"/"}
-            className="text-md font-bold text-gray-800 hover:text-gray-600"
+            href={`/posts/${id}`}
+            className="text-sm leading-1 md:text-sm text-gray-800 hover:text-gray-600"
           >
             {title || "Title"}
           </Link>
         </div>
-        <Author></Author>
       </div>
     </div>
   );
