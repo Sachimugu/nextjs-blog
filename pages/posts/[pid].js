@@ -9,8 +9,38 @@ import Error from "@/components/error";
 import Spinner from "@/components/spinner";
 import Swr from "../utils/swr";
 import Link from "next/link";
+import { SWRConfig } from "swr";
 
-const Page = ({ post }) => {
+
+
+const Page = ({fallback}) => {
+  const router = useRouter()
+  const {pid}= router.query
+
+
+
+  const { data, isLoading, isError } = Swr(`api/posts/${pid}`);
+  if (isLoading)
+    return (
+      <div>
+        <Spinner></Spinner>
+      </div>
+    );
+  if (isError)
+    return (
+      <div>
+        <Error />
+      </div>
+    );
+  return (
+    <SWRConfig value={{fallback}}>
+      <Article post={data}></Article>
+    </SWRConfig>
+  );
+}
+
+const Article = ({ post }) => {
+
   const { id, title, category, img, published, author, description, subtitle } =
     post;
   
@@ -58,7 +88,12 @@ export async function getStaticProps({params}) {
   // const Id = 1
   // const post = posts.find(value=>value.id==Id)
   return {
-    props: { post },
+    props: {
+      // post,
+      fallback: {
+        '/api/posts':post
+      }
+    },
   };
 }
 

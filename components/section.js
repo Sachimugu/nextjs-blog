@@ -37,6 +37,7 @@ export default function section1() {
           modules={[Autoplay, Pagination]}
           pagination={{ clickable: true }}
           slidesPerView={1}
+          
         >
           {data.map((value, index) => {
             return (
